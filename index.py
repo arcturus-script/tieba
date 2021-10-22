@@ -196,10 +196,10 @@ def start():
                 content = content + '|%s|%d|%s|\n' % (j['title'], j['exp'],
                                                       j['msg'])
 
-        if push_type == '1':
+        if push_type == '2':
             p = push.server(key)
             p.push_message('百度贴吧', content)
-        elif push_type == '2':
+        elif push_type == '3':
             p = push.pushplus(key)
             p.push_message('百度贴吧', content)
 
