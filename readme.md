@@ -7,7 +7,7 @@
 
 |    key    |               description                |
 | :-------: | :--------------------------------------: |
-|   BDUSS   |                    -                     |
+|   BDUSS   |        多账户使用 `;` 分割              |
 | push_type |                    -                     |
 |    key    | 如果使用 server 酱或者 pushplus 的话需要 |
 
