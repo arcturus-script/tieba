@@ -10,7 +10,6 @@ sign_url = 'http://c.tieba.baidu.com/c/c/forum/sign'
 
 User_Agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36 Edg/95.0.1020.30'
 
-UTF8 = 'utf-8'
 
 s = requests.Session()
 
