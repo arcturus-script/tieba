@@ -29,14 +29,15 @@ class Tieba:
     LIKE_URL = "http://c.tieba.baidu.com/c/f/forum/like"
     TBS_URL = "http://tieba.baidu.com/dc/common/tbs"
     SIGN_URL = "http://c.tieba.baidu.com/c/c/forum/sign"
-    INFO_URL = "https://tieba.baidu.com/mg/o/profile?format=json"
+    INFO_URL = "http://c.tieba.baidu.com/mg/o/profile?format=json"
 
     def __init__(self, bduss: str) -> None:
         self.bduss = bduss
         self.headers = {
             "Host": "tieba.baidu.com",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36 Edg/95.0.1020.30",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.124 Safari/537.36 Edg/102.0.1245.44",
             "Cookie": f"BDUSS={self.bduss}",
+            "Connection": "keep-alive",
         }
 
     @staticmethod
@@ -139,7 +140,12 @@ class Tieba:
             while res.get("has_more") == "1":
                 # 下一页
                 i += 1
-                data.update({"page_no": str(i), "timestamp": str(int(time.time()))})
+                data.update(
+                    {
+                        "page_no": str(i),
+                        "timestamp": str(int(time.time())),
+                    }
+                )
 
                 data = Tieba.encodeData(data)
                 try:
@@ -171,7 +177,7 @@ class Tieba:
             print("🐼 获取关注的贴吧结束...")
             return t
         except Exception as ex:
-            print("🤡 获取关注贴吧时出错, 原因: {ex}")
+            print(f"🤡 获取关注贴吧时出错, 原因: {ex}")
             return []
 
     def client_sign(self, fid, kw):
