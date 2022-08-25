@@ -211,6 +211,13 @@ class Tieba:
                 "msg": "签到过了",
                 "title": kw,
             }
+        elif res.get("error_code") == "340006":
+            return {
+                "status": False,
+                "exp": 0,
+                "msg": "无法签到",
+                "title": kw,
+            }
         else:
             exp = res["user_info"].get("sign_bonus_point")
             print(f"🐻 [{kw}吧]签到获得{exp}点经验")
