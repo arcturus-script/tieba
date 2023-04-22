@@ -182,31 +182,8 @@ class Tieba:
 
         res = req.post(url=SIGN_URL, data=data, timeout=5).json()
 
-        if res.get("error_code") == "160002":
-            print(f"[success] {kw} {res['error_msg']}")
-
-            return {
-                "status": False,
-                "exp": 0,
-                "msg": "签到过了",
-                "title": kw,
-            }
-        elif res.get("error_code") == "340006":
-            return {
-                "status": False,
-                "exp": 0,
-                "msg": "无法签到",
-                "title": kw,
-            }
-        elif res.get("error_code") == "340011":
-            return {
-                "status": False,
-                "exp": 0,
-                "msg": "签到太快",
-                "title": kw,
-            }
-        else:
-            exp = res["user_info"].get("sign_bonus_point")
+        if res.get("user_info"):
+            exp = res.get("user_info").get("sign_bonus_point")
 
             print(f"[success] {kw} {exp}经验")
 
@@ -214,6 +191,13 @@ class Tieba:
                 "status": True,
                 "exp": int(exp),
                 "msg": "签到成功",
+                "title": kw,
+            }
+        else:
+            return {
+                "status": False,
+                "exp": 0,
+                "msg": res.get("error_msg"),
                 "title": kw,
             }
 
