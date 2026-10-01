@@ -1,9 +1,9 @@
-## 百度贴吧签到(云函数版)
-
-注意把子模块也一起下载
+## 百度贴吧签到
 
 ```bash
-git clone --recursive https://github.com/arcturus-script/tieba.git
+pdm install
 ```
 
-直接配置 config.py, 入口函数改为 index.main
+```bash
+pdm run python index.py
+```
