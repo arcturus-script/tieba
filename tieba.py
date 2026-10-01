@@ -28,8 +28,8 @@ def encodeData(data):
 
 
 class Tieba:
-    def __init__(self, **config) -> None:
-        self.bduss = config.get("bduss")
+    def __init__(self, bduss):
+        self.bduss = bduss
 
         self.headers = {
             "Host": "tieba.baidu.com",
@@ -202,7 +202,7 @@ class Tieba:
             }
 
     @handler
-    def start(self) -> list:
+    def start(self):
         sign_list = []
 
         self.get_user_info()
