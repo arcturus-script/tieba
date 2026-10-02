@@ -1,7 +1,7 @@
 import hashlib
 import logging
 import time
-
+import re
 import requests
 
 logger = logging.getLogger(__name__)
@@ -15,6 +15,20 @@ USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTM
 REQUEST_TIMEOUT = 5
 SIGN_KEY = "tiebaclient!!!"
 
+sensitive_dict = {
+    "禁书": "禁書",
+}
+
+
+def exchange_sensitive_stop_words(text):
+    keys = sorted(sensitive_dict.keys(), key=len, reverse=True)
+    pattern = re.compile("|".join(map(re.escape, keys)))
+
+    def _replace(match):
+        return sensitive_dict[match.group(0)]
+
+    return pattern.sub(_replace, text)
+
 
 def build_message(result, reason=""):
     if result["status"]:
@@ -22,9 +36,9 @@ def build_message(result, reason=""):
 
         for item in result["result"]:
             if item["status"]:
-                contents.append({"content": f"{item['title']}: {item['exp']} 经验"})
+                contents.append({"content": f"{exchange_sensitive_stop_words(item['title'])}: {item['exp']} 经验"})
             else:
-                contents.append({"content": f"{item['title']}: {item['msg']}"})
+                contents.append({"content": f"{exchange_sensitive_stop_words(item['title'])}: {item['msg']}"})
 
         return {
             "title": SCRIPT_NAME,
